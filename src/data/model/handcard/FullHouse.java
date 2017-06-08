@@ -9,26 +9,40 @@ import java.util.Stack;
 /**
  * Created by alexferreira on 06/06/17.
  */
-public class FullHouse implements HandCard {
+public class FullHouse extends BaseNoHigherHand {
 
-    public FullHouse(List<Card> cards) {
+    private Group mGroup;
+    private List<Pair> mPairs;
+    private Kicker mKicker;
+
+    @Override
+    public HandCard generateFromSpec(SpecHand specHand) {
+        Group group = specHand.retrieveGroup();
+        List<Pair> pairs = specHand.retrievePairs();
+        if (group.getLength() == 3 && !pairs.isEmpty()){
+            mGroup = group;
+            mPairs = pairs;
+            mKicker = specHand.retrieveKicker();
+            return this;
+        }
+
+        return null;
     }
 
     @Override
-    public boolean isHandType(List<Card> cards) {
-        Stack<Card> cardStack = new Stack<>();
-        cardStack.addAll(cards);
-        boolean hasPair = new OnePairHand().isHandType(cards);
-        if (hasPair){
-            while (cardStack.size() > 3){
-                Card card = cardStack.pop();
-                int sameCard = HandUtil.countSameCardValue(card, cardStack.elements());
-                if (sameCard == 3){
-                    return true;
-                }
-            }
-        }
+    public HandType getType() {
+        return HandType.FULL_HOUSE;
+    }
 
-        return false;
+    public Group getmGroup() {
+        return mGroup;
+    }
+
+    public List<Pair> getmPairs() {
+        return mPairs;
+    }
+
+    public Kicker getmKicker() {
+        return mKicker;
     }
 }

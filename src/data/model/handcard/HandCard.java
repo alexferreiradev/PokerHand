@@ -9,6 +9,16 @@ import java.util.List;
  */
 public interface HandCard {
 
-    boolean isHigherThan(HandCard hand);
+    boolean isHigherThan(NoHigherHand hand);
+
+    /**
+     * Gera uma mao de acordo com a specificação passada.
+     *
+     * @param specHand
+     * @return - null caso a especificação não ser adequada para gerar.
+     */
+    HandCard generateFromSpec(SpecHand specHand);
+
+    HandType getType();
 
 }

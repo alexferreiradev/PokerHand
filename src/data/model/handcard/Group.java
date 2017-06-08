@@ -3,6 +3,7 @@ package data.model.handcard;
 import data.model.Card;
 import data.model.CardValue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +23,24 @@ public class Group {
         this.cards = cards;
         this.value = cards.get(0).getValueType();
         this.length = cards.size();
+    }
+
+    /**
+     * Remove as cartas que nao formam grupo.
+     *
+     * @return - cartas que não formam grupo.
+     */
+    public List<Card> retrieveGroup(){
+        int nextCardIdx = 1;
+        List<Card> withoutGroup = new ArrayList<>();
+        for (Card card : cards) {
+            Card nextCard = cards.get(nextCardIdx);
+            if (card.getValueType() != nextCard.getValueType()){
+                cards.remove(card);
+                withoutGroup.add(card);
+            }
+        }
+        return withoutGroup;
     }
 
     public CardValue getValue() {

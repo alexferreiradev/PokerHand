@@ -11,28 +11,23 @@ import java.util.Stack;
 /**
  * Created by alexferreira on 06/06/17.
  */
-public class OnePairHand implements HandCard {
+public class OnePairHand extends BaseNoHigherHand {
+
+    private List<Pair> mPairs;
 
     @Override
-    public boolean isHandType(List<Card> cards) {
-        Stack<Card> cardStack = new Stack<>();
-        cardStack.addAll(cards);
-        while (cardStack.size() > 1){
-            Card card = cardStack.pop();
-            int sameCard = HandUtil.countSameCardValue(card, cardStack.elements());
-            if (sameCard == 2){
-                return true;
-            }
+    public HandCard generateFromSpec(SpecHand specHand) {
+        List<Pair> pairs = specHand.retrievePairs();
+        if (pairs.isEmpty() || pairs.size() > 1){
+            return null;
         }
-        return false;
+        mPairs = pairs;
+
+        return this;
     }
 
-    public List<Card> removePair(List<Card> cards){
-        Map<CardValue, Integer> groupOfValues = HandUtil.groupOfValues(cards);
-        for (Map.Entry<CardValue, Integer> entry : groupOfValues.entrySet()) {
-            Integer count = entry.getValue();
-            CardValue cardValue = entry.getKey();
-
-        }
+    @Override
+    public HandType getType() {
+        return HandType.ONE_PAIR;
     }
 }

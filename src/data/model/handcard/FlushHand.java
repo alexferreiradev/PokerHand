@@ -2,32 +2,31 @@ package data.model.handcard;
 
 import data.model.Card;
 import data.model.SuitCard;
+import data.model.handcard.util.HandUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by alexferreira on 06/06/17.
  */
-public class FlushHand implements HandCard {
+public class FlushHand extends BaseNoHigherHand {
 
-    public FlushHand() {
+    @Override
+    public HandCard generateFromSpec(SpecHand specHand) {
+        List<Card> cards = specHand.getCards();
+        SuitCard suitCard = null;
+        if (specHand.retrieveSequence().isComplete() || !HandUtil.isSameSuit(cards)){
+            return null;
+        }
+
+        higherCard = HandUtil.getLastCard(specHand.getCards());
+
+        return this;
     }
 
     @Override
-    public boolean isHandType(List<Card> cards) {
-        SuitCard lastSuit = null;
-        for (Card card : cards) {
-            if (lastSuit ==  null){
-                lastSuit = card.getSuitType();
-                continue;
-            }
-
-            if (lastSuit != card.getSuitType()) {
-                return false;
-            }
-            lastSuit = card.getSuitType();
-        }
-        return false;
+    public HandType getType() {
+        return HandType.FLUSH;
     }
+
 }

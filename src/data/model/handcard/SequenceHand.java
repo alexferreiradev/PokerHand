@@ -1,20 +1,30 @@
 package data.model.handcard;
 
 import data.model.Card;
+import data.model.CardValue;
+import data.model.handcard.util.HandUtil;
 
 import java.util.List;
 
 /**
  * Created by alexferreira on 06/06/17.
  */
-public class SequenceHand extends HandCard {
+public class SequenceHand extends BaseNoHigherHand {
 
-    public SequenceHand(List<Card> cards) {
-        super(cards);
+    @Override
+    public HandCard generateFromSpec(SpecHand specHand) {
+        if (specHand.retrieveSequence().isComplete() &&
+                specHand.retrieveSequence().getInitValue() != CardValue.TEN &&
+                !specHand.retrieveSequence().isAllSameSuit()){
+            higherCard = HandUtil.getLastCard(specHand.getCards());
+            return this;
+        }
+
+        return null;
     }
 
     @Override
-    public boolean isHandType(List<Card> cards) {
-        return false;
+    public HandType getType() {
+        return HandType.SEQUENCE;
     }
 }

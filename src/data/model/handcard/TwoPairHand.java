@@ -7,10 +7,15 @@ import java.util.List;
 /**
  * Created by alexferreira on 06/06/17.
  */
-public class TwoPairHand implements HandCard {
+public class TwoPairHand extends BaseNoHigherHand {
 
     @Override
-    public boolean isHandType(List<Card> cards) {
-        return false;
+    public HandCard generateFromSpec(SpecHand specHand) {
+        return null;
+    }
+
+    @Override
+    public HandType getType() {
+        return HandType.TWO_PAIR;
     }
 }

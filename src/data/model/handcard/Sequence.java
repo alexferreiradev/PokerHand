@@ -23,7 +23,7 @@ public class Sequence {
         this.cards = cards;
         this.initValue = cards.get(0).getValueType();
         this.isAllSameSuit = true;
-        this.length = extractPosSeq(cards, 0) + 1;
+        this.length = 1;
     }
 
     private int extractPosSeq(List<Card> cards, int pos){
@@ -48,7 +48,9 @@ public class Sequence {
         this.initValue = initValue;
     }
 
-    public int getLength() {
+    public int extractLength() {
+        length = extractPosSeq(cards, 0) + 1;
+
         return length;
     }
 
@@ -91,5 +93,17 @@ public class Sequence {
                 ", length=" + length +
                 ", isAllSameSuit=" + isAllSameSuit +
                 '}';
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public boolean isComplete() {
+        return extractLength() == 5 ? true : false;
     }
 }

@@ -2,6 +2,7 @@ package data.model.handcard.util;
 
 import data.model.Card;
 import data.model.CardValue;
+import data.model.SuitCard;
 
 import java.util.*;
 
@@ -39,5 +40,27 @@ public class HandUtil {
             groups.put(card.getValueType(), countSameCardValue(card, cardStack.elements()));
         }
         return groups;
+    }
+
+    public static Card getLastCard(List<Card> cards){
+        if (cards != null && !cards.isEmpty()){
+            return cards.get(cards.size() - 1);
+        }
+        return null;
+    }
+
+    public static boolean isSameSuit(List<Card> cards){
+        SuitCard suitCard = null;
+        for (Card card : cards) {
+            if (suitCard == null){
+                suitCard = card.getSuitType();
+                continue;
+            }
+
+            if (suitCard != card.getSuitType()){
+                return false;
+            }
+        }
+        return true;
     }
 }

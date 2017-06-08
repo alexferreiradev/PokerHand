@@ -9,22 +9,22 @@ import java.util.Stack;
 /**
  * Created by alexferreira on 06/06/17.
  */
-public class FourKindHand implements HandCard {
+public class FourKindHand extends BaseNoHigherHand {
 
     @Override
-    public boolean isHandType(List<Card> cards) {
-        int count = 0;
-
-        Stack<Card> cardStack = new Stack<>();
-        cardStack.addAll(cards);
-        while (cardStack.size() > 3){
-            Card card = cardStack.pop();
-            int sameCard = HandUtil.countSameCardValue(card, cardStack.elements());
-            if (sameCard == 4){
-                return true;
-            }
+    public HandCard generateFromSpec(SpecHand specHand) {
+        Group group = specHand.retrieveGroup();
+        if (group.getLength() == 4){
+            higherCard = HandUtil.getLastCard(specHand.retrieveKicker().getCards());
+            return this;
         }
 
-        return false;
+        return null;
     }
+
+    @Override
+    public HandType getType() {
+        return HandType.FOUR_KIND;
+    }
+
 }
