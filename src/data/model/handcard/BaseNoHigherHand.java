@@ -10,9 +10,16 @@ public abstract class BaseNoHigherHand implements NoHigherHand{
     protected Card higherCard;
 
     @Override
-    public boolean isHigherThan(NoHigherHand hand) {
-        if (isSameHand(hand)){
-            return isHigherKicker(hand);
+    public boolean isHigherThan(HandCard hand) {
+        NoHigherHand noHigherHand = null;
+        if (hand instanceof NoHigherHand){
+            noHigherHand = (NoHigherHand) hand;
+        } else{
+            return false;
+        }
+
+        if (isSameHand(noHigherHand)){
+            return isHigherKicker(noHigherHand);
         }
 
         return getType().isHigherThan(hand.getType());

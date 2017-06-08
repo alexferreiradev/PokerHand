@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface HandCard {
 
-    boolean isHigherThan(NoHigherHand hand);
+    boolean isHigherThan(HandCard hand);
 
     /**
      * Gera uma mao de acordo com a specificação passada.

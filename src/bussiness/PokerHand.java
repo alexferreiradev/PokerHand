@@ -5,6 +5,9 @@ import data.model.CardValue;
 import data.model.ResultHand;
 import data.model.SuitCard;
 import data.model.handcard.HandCard;
+import data.model.handcard.HandFactory;
+import data.model.handcard.NoHigherHand;
+import data.model.handcard.SpecHand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +20,14 @@ public class PokerHand {
 
     private String hand;
     private List<Card> cards;
+    private HandCard handCard;
 
     public PokerHand(String hand) {
         this.hand = hand;
-        extractCards();
+        extractHand();
     }
 
-    private void extractCards() {
+    private void extractHand() {
         StringTokenizer tokenizer = new StringTokenizer(hand, " ");
         cards = new ArrayList<>();
         while (tokenizer.hasMoreTokens()){
@@ -34,11 +38,20 @@ public class PokerHand {
             Card card = new Card(suitType, value);
             cards.add(card);
         }
+
+        HandFactory handFactory = new HandFactory(new SpecHand(cards));
+        handCard = handFactory.build();
     }
 
     public ResultHand compareWith(PokerHand hand){
-        new HandCard();
-        return ;
+        if (this.handCard.isHigherThan(hand.getHandCard())){
+            return ResultHand.WIN;
+        }
+
+        return ResultHand.LOSS;
     }
 
+    public HandCard getHandCard() {
+        return handCard;
+    }
 }

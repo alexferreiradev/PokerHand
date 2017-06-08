@@ -10,11 +10,11 @@ import java.util.Stack;
 /**
  * Created by alexferreira on 07/06/17.
  */
-public class BuilderHand {
+public class HandFactory {
 
     private SpecHand specHand;
 
-    public BuilderHand(SpecHand specHand) {
+    public HandFactory(SpecHand specHand) {
         this.specHand = specHand;
     }
 
